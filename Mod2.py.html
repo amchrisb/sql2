@@ -1,0 +1,54 @@
+<html>
+<head>
+<title>Mod2.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #0033b3;}
+.s1 { color: #080808;}
+.s2 { color: #8c8c8c; font-style: italic;}
+.s3 { color: #067d17;}
+.s4 { color: #0037a6;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Mod2.py</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">mysql.connector</span>
+
+<span class="s0">try</span><span class="s1">:</span>
+    <span class="s2"># Establish connection to the MySQL server</span>
+    <span class="s1">mydb = mysql.connector.connect(</span>
+        <span class="s1">host=</span><span class="s3">&quot;localhost&quot;</span><span class="s1">,</span>
+        <span class="s1">user=</span><span class="s3">&quot;root&quot;</span><span class="s1">,</span>
+        <span class="s1">password=</span><span class="s3">&quot;1234&quot;</span><span class="s1">,</span>
+        <span class="s1">database=</span><span class="s3">&quot;menagerie&quot;  </span><span class="s2"># Replace with your database name</span>
+    <span class="s1">)</span>
+
+    <span class="s2"># Create a cursor</span>
+    <span class="s1">mycursor = mydb.cursor()</span>
+
+    <span class="s2"># SQL query to retrieve name, birth date, and month of birth</span>
+    <span class="s1">sql_query = </span><span class="s3">&quot;SELECT name, birth, MONTH(birth) FROM pet&quot;</span>
+
+    <span class="s2"># Execute the query</span>
+    <span class="s1">mycursor.execute(sql_query)</span>
+
+    <span class="s2"># Fetch all the rows from the query result</span>
+    <span class="s1">pet_birth_info = mycursor.fetchall()</span>
+
+    <span class="s2"># Display the name, birth date, and month of birth</span>
+    <span class="s0">for </span><span class="s1">name, birth_date, month_birth </span><span class="s0">in </span><span class="s1">pet_birth_info:</span>
+        <span class="s1">print(</span><span class="s3">f&quot;Name: </span><span class="s4">{</span><span class="s1">name</span><span class="s4">}</span><span class="s3">, Birth Date: </span><span class="s4">{</span><span class="s1">birth_date</span><span class="s4">}</span><span class="s3">, Month of Birth: </span><span class="s4">{</span><span class="s1">month_birth</span><span class="s4">}</span><span class="s3">&quot;</span><span class="s1">)</span>
+
+<span class="s0">except </span><span class="s1">mysql.connector.Error </span><span class="s0">as </span><span class="s1">error:</span>
+    <span class="s1">print(</span><span class="s3">&quot;Error:&quot;</span><span class="s1">, error)</span>
+<span class="s0">finally</span><span class="s1">:</span>
+    <span class="s0">if </span><span class="s1">mydb.is_connected():</span>
+        <span class="s1">mycursor.close()</span>
+        <span class="s1">mydb.close()</span>
+</pre>
+</body>
+</html>
